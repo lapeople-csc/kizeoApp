@@ -45,14 +45,17 @@ async function fetchByDate(yyyy_mm_dd) {
     .lean();
 }
 
-// Fecha en Bogotá para Excel: DD/MM/AAAA
-const fmtBogotaSoloFecha = (d) => {
+// Fecha en Bogotá para Excel: YYYY/MM/DD HH:MM:SS
+const fmtBogotaFechaHora = (d) => {
   if (!d) return "";
   const nd = new Date(d);
-  const dd = String(nd.toLocaleString("es-CO", { timeZone: TZ, day: "2-digit" }));
-  const mm = String(nd.toLocaleString("es-CO", { timeZone: TZ, month: "2-digit" }));
   const yyyy = nd.toLocaleString("es-CO", { timeZone: TZ, year: "numeric" });
-  return `${dd}/${mm}/${yyyy}`;
+  const mm = String(nd.toLocaleString("es-CO", { timeZone: TZ, month: "2-digit" }));
+  const dd = String(nd.toLocaleString("es-CO", { timeZone: TZ, day: "2-digit" }));
+  const hh = String(nd.toLocaleString("es-CO", { timeZone: TZ, hour: "2-digit", hour12: false })).padStart(2, "0");
+  const min = String(nd.toLocaleString("es-CO", { timeZone: TZ, minute: "2-digit" })).padStart(2, "0");
+  const sec = String(nd.toLocaleString("es-CO", { timeZone: TZ, second: "2-digit" })).padStart(2, "0");
+  return `${yyyy}/${mm}/${dd} ${hh}:${min}:${sec}`;
 };
 
 // Helper para llenar una hoja (permite forzar duración fija opcionalmente)
@@ -64,7 +67,7 @@ function fillWorksheet(ws, rows, { fixedDuration = null } = {}) {
       r["Cuenta"] ?? "",
       r["Tipo de gestion"] ?? "",
       r["Resultado de gestion"] ?? "",
-      fmtBogotaSoloFecha(r["Fecha de gestion"]),
+      fmtBogotaFechaHora(r["Fecha de gestion"]),
       r["Observacion"] ?? "",
       r["Fecha de proxima gestion"] ?? "",
       r["Proxima gestion"] ?? "",
