@@ -68,4 +68,21 @@ router.post("/reportes/visitas", generarExcelVisitasPorFechaController); // ?dat
 router.post("/enviar_reportes/visitas/ayer", enviarExcelVisitasAyerController);
 router.post("/enviar_reportes/visitas", enviarExcelVisitasPorFechaController); // ?date=YYYY-MM-DD
 
+import {
+  generarExcelAPVisitasMesController,
+  generarExcelAPVisitasPorFechaController,
+  generarExcelAPVisitasFueraMadridPorFechaController,
+  enviarExcelAPVisitasMesController,
+  enviarExcelAPVisitasPorFechaController,
+  enviarExcelAPVisitasFueraMadridPorFechaController
+} from "../controllers/APVisitasReportController.js";
+
+router.post("/reportes/ap/visitas/mes", generarExcelAPVisitasMesController);
+router.post("/reportes/ap/visitas/semana/fuera_madrid", generarExcelAPVisitasFueraMadridPorFechaController);
+router.post("/reportes/ap/visitas/semana", generarExcelAPVisitasPorFechaController);
+
+router.post("/enviar_reportes/ap/visitas/mes", enviarExcelAPVisitasMesController);
+router.post("/enviar_reportes/ap/visitas/semana/fuera_madrid", enviarExcelAPVisitasFueraMadridPorFechaController);
+router.post("/enviar_reportes/ap/visitas/semana", enviarExcelAPVisitasPorFechaController);
+
 export default router;
